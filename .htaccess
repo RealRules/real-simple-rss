@@ -1,0 +1,45 @@
+# Real Simple RSS - Apache configuration
+# Enforce access control for a single-directory deployment.
+
+Options -Indexes
+
+# Deny access to version-control metadata, the session store and the
+# development-only test suite.
+<IfModule mod_alias.c>
+    RedirectMatch 404 /\.git
+    RedirectMatch 404 /sessions
+    RedirectMatch 404 /tests
+</IfModule>
+
+# Block direct access to sensitive configuration and system files.
+<FilesMatch "^(config\.php|config\.sample\.php|schema\.sql|install\.lock|composer\.(json|lock)|\.gitignore|\.htaccess|\.htpasswd)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Only allow PHP files to be executed, never served as plaintext.
+<FilesMatch "\.phps$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+</IfModule>

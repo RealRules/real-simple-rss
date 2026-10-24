@@ -1,0 +1,14 @@
+# Generated at install time - contains DB credentials and the cron secret.
+/config.php
+/install.lock
+
+# Runtime session store.
+/sessions/
+
+# Composer dependencies (optional; never commit vendored code).
+/vendor/
+
+# Logs and OS cruft.
+*.log
+.DS_Store
+Thumbs.db

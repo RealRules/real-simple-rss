@@ -1,0 +1,25 @@
+{
+    "name": "real-simple-rss/reader",
+    "description": "Real Simple RSS: a lightweight, self-hosted, multi-user PHP RSS/Atom reader.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.4",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-simplexml": "*",
+        "ext-mbstring": "*",
+        "ext-json": "*"
+    },
+    "config": {
+        "platform": {
+            "php": "8.4.0"
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "php tests/run.php"
+    }
+}
