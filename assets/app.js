@@ -468,11 +468,17 @@
             Dom.query('#postList').addEventListener('scroll', () => this.maybeLoadMore());
 
             Dom.query('#markAllReadBtn').addEventListener('click', () => {
+                const unread = this.store.totals.unread;
+                const count = unread > 0
+                    ? 'All ' + unread + ' unread article' + (unread === 1 ? '' : 's') + ' will be marked as read.'
+                    : 'You have no unread articles.';
                 this.modal.confirm({
-                    title: 'Mark all read',
-                    message: 'Mark every article in all of your feeds as read?',
-                    confirmLabel: 'Mark all read',
-                    danger: false
+                    title: 'Mark everything read',
+                    message: 'This applies to ALL of your feeds, not just the feed or list you are viewing. '
+                        + count
+                        + ' You can undo it per feed with "Mark all unread".',
+                    confirmLabel: 'Mark everything read',
+                    danger: true
                 }).then((ok) => {
                     if (!ok) {
                         return;
